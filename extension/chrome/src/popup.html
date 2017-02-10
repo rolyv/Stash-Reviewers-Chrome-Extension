@@ -40,7 +40,12 @@
 			<div id="reviewers" class="tab-pane active">
 				<div class="alert alert-info" role="alert">
 					<span class="block">Json format:</span>
-					<code>{ "groups": [{ "groupName":"group name", "reviewers": ["reviewer 1 name or email", "reviewer 2 name or email"] } ] }</code>
+					<code>
+						{
+							"group1" : ["reviewer 1 name or email", "reviewer 2 name or email"],
+                            "group2" : "random(group1, 1)"
+                        }
+                    </code>
 				</div>
 
 				<div>

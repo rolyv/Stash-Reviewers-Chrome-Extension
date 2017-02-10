@@ -122,7 +122,7 @@ $(document).ready(function() {
 
 		groupPromises.push(new Promise((resolve, reject) => {
 			if (!newValue) {
-				resolve({groups:[]});
+				resolve({});
 			}
 			try { JSON.parse(newValue); }
 			catch (e) {
@@ -151,10 +151,10 @@ $(document).ready(function() {
 		});
 
 		Promise.all(groupPromises).then(values => {
-			let joined = [];
+			let joined = {};
 			values.forEach((group) => {
-				if (group.groups) {
-					joined = joined.concat(group.groups);
+				if (group) {
+					joined = Object.assign(joined, group);
 				}
 			});
 			if (joined.length === 0) {

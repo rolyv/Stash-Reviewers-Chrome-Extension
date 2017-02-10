@@ -1,8 +1,9 @@
-{ "groups": [ { 
-    "groupName":"desktop reviewers", 
-    "reviewers": ["example username 1" ] 
-  },
-  { 
-    "groupName":"mobile reviewers", 
-    "reviewers": ["example@example.com", "example2@example.com"] 
-  } ] }
+{
+  "desktop reviewers": [
+    "example username 1"
+  ],
+  "mobile reviewers": [
+    "example@example.com",
+    "example2@example.com"
+  ]
+}

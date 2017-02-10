@@ -33,13 +33,13 @@ const reloadLists = function() {
 				groupPromises.push(p);
 			});
 			Promise.all(groupPromises).then(groups => {
-				let joined = [];
+				let joined = {};
 				groups.forEach((group) => {
-					if (group.groups) {
-						joined = joined.concat(group.groups);
+					if (group) {
+						joined = Object.assign(joined, group);
 					}
 				});
-				resolve({groups: joined});
+				resolve(joined);
 			});
 		});
 	});
@@ -48,7 +48,7 @@ const reloadLists = function() {
 	const str = new Promise((resolve, reject) => {
 		extensionStorage.loadGroups(groups => {
 			if (!groups) {
-				return resolve({groups: []});
+				return resolve({});
 			}
 			resolve(JSON.parse(groups));
 		});
@@ -56,13 +56,13 @@ const reloadLists = function() {
 	promises.push(str);
 
 	Promise.all(promises).then(values => {
-		let joined = [];
+		let joined = {};
 		values.forEach((group) => {
-			if (group.groups) {
-				joined = joined.concat(group.groups);
+			if (group) {
+				joined = Object.assign(joined, group);
 			}
 		});
-		if (joined.length === 0) {
+		if (Object.keys(joined).length === 0) {
 			throw({msg: 'Groups are empty', e: {}});
 		}
 		return new Promise((resolve, reject) => {

@@ -17,7 +17,7 @@ function injectEngine(){
 	extensionStorage.loadGroupsArray(function(data) {
 		groupDef.resolve();
 		if(data) {
-			createInlineScript("var jsonGroups = {groups: " + JSON.stringify(data) + "};");
+			createInlineScript("var jsonGroups = " + JSON.stringify(data) + ";");
 		}
 		else {
 			console.warn("reviewers plugin: no data");
