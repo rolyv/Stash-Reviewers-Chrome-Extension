@@ -1562,16 +1562,7 @@
         'bitbucket/util/server',
         'moment',
         'bitbucket-plugin/url'
-    ], function (AJS,
-                 auiFlag,
-                 jQuery,
-                 _,
-                 events,
-                 pageState,
-                 nav,
-                 ajax,
-                 moment,
-                 urlUtil) {
+    ], function (AJS, auiFlag, jQuery, _, events, pageState, nav, ajax, moment, urlUtil) {
         'use strict';
         String.prototype.toBool = function () {
             return this.toString().toLowerCase() === 'true';
@@ -2221,7 +2212,7 @@
                 window.communication.runtime.sendMessage(window.chromeExtId, {
                     method: 'GET',
                     action: 'xhttp',
-                    url: 'https://raw.githubusercontent.com/dragouf/Stash-Reviewers-Chrome-Extension/master/version'
+                    url: 'https://raw.githubusercontent.com/rolyv/Stash-Reviewers-Chrome-Extension/master/version'
                 }, function (data) {
                     if (!data) {
                         data.response = 'cant.reach.github';
@@ -2244,7 +2235,7 @@
                             body = "Can't connect to github to check version.";
                         }
 
-                        body += '<br><br><a href="https://github.com/dragouf/Stash-Reviewers-Chrome-Extension/blob/master/history" target="_blank">See history (repository)</a>';
+                        body += '<br><br><a href="https://github.com/rolyv/Stash-Reviewers-Chrome-Extension/blob/master/history" target="_blank">See history (repository)</a>';
                         body += ' <a id="skipVersionLink" href="javascript:window.hideStashRGEVersion();" style="float:right">Skip this version</a>';
 
                         var flag = auiFlag({
@@ -2500,20 +2491,7 @@
         'bitbucket/internal/widget/avatar-list',
         'bitbucket/internal/feature/repository/branch-selector',
         'bitbucket/internal/model/revision-reference'
-    ], function (AJS,
-                 auiFlag,
-                 jQuery,
-                 _,
-                 events,
-                 ajax,
-                 pageState,
-                 nav,
-                 PullRequestsTable,
-                 SearchableMultiSelector,
-                 UserMultiSelector,
-                 avatarList,
-                 BranchSelector,
-                 revisionReference) {
+    ], function (AJS, auiFlag, jQuery, _, events, ajax, pageState, nav, PullRequestsTable, SearchableMultiSelector, UserMultiSelector, avatarList, BranchSelector, revisionReference) {
         'use strict';
         //////////////////////////////////////////////////// Add filter to Pull Request list
         // utilities
@@ -2793,7 +2771,6 @@
             addPrFilters: addPrFilters
         }
     });
-
 
     extensionInit();
 
