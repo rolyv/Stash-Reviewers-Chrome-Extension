@@ -55,13 +55,14 @@
         'bitbucket/util/events',
         'bitbucket/util/state',
         'bitbucket-plugin/url'
-    ], function (AJS,
-                 auiFlag,
-                 jQuery,
-                 _,
-                 events,
-                 pageState,
-                 urlUtil) {
+    ], function (
+        AJS,
+        auiFlag,
+        jQuery,
+        _,
+        events,
+        pageState,
+        urlUtil) {
         'use strict';
         function addCheckoutLink(branchId) {
             var project = pageState.getProject();
@@ -1013,13 +1014,15 @@
         'bitbucket/util/events',
         'bitbucket/util/state',
         'parser'
-    ], function (AJS,
-                 auiFlag,
-                 jQuery,
-                 _,
-                 events,
-                 pageState,
-                 parser) {
+    ], function (
+        AJS,
+        auiFlag,
+        jQuery,
+        _,
+        events,
+        pageState,
+        parser) {
+
         'use strict';
         var listId = "ul_reviewers_list";
         var reviewersDataKey = "reviewers";
@@ -1216,9 +1219,25 @@
             jQuery(markDownHelp[0]).before($button);
         }
 
+        function injectPRChecklist(prChecklist) {
+            if (jQuery('#s2id_reviewers').length == 0 || prChecklist.length == 0)
+                return;
+
+            var $checklistDiv = jQuery("<div>").attr("id", "prChecklist").addClass("prChecklist").append("<h2>Pull Request Checklist</h2>");
+            var $checklistList = jQuery("<ul>");
+            $checklistDiv.append($checklistList);
+
+            for(var i in prChecklist) {
+                $checklistList.append("<li><input type='checkbox'>" + prChecklist[i] + "</li>");
+            }
+
+            jQuery("body").append($checklistDiv);
+        }
+
         return {
             injectTemplateButton: injectTemplateButton,
-            injectReviewersDropdown: injectReviewersDropdown
+            injectReviewersDropdown: injectReviewersDropdown,
+            injectPRChecklist: injectPRChecklist
         };
     });
 
@@ -1230,13 +1249,14 @@
         'bitbucket/util/events',
         'bitbucket/util/state',
         'bitbucket-plugin/url'
-    ], function (AJS,
-                 auiFlag,
-                 jQuery,
-                 _,
-                 events,
-                 pageState,
-                 urlUtil) {
+    ], function (
+        AJS,
+        auiFlag,
+        jQuery,
+        _,
+        events,
+        pageState,
+        urlUtil) {
         'use strict';
         //////////////////////////////////////////////////// Build with jenkins link
         function addBuildLink() {
@@ -1562,7 +1582,17 @@
         'bitbucket/util/server',
         'moment',
         'bitbucket-plugin/url'
-    ], function (AJS, auiFlag, jQuery, _, events, pageState, nav, ajax, moment, urlUtil) {
+    ], function (
+        AJS,
+        auiFlag,
+        jQuery,
+        _,
+        events,
+        pageState,
+        nav,
+        ajax,
+        moment,
+        urlUtil) {
         'use strict';
         String.prototype.toBool = function () {
             return this.toString().toLowerCase() === 'true';
@@ -2491,7 +2521,21 @@
         'bitbucket/internal/widget/avatar-list',
         'bitbucket/internal/feature/repository/branch-selector',
         'bitbucket/internal/model/revision-reference'
-    ], function (AJS, auiFlag, jQuery, _, events, ajax, pageState, nav, PullRequestsTable, SearchableMultiSelector, UserMultiSelector, avatarList, BranchSelector, revisionReference) {
+    ], function (
+        AJS,
+        auiFlag,
+        jQuery,
+        _,
+        events,
+        ajax,
+        pageState,
+        nav,
+        PullRequestsTable,
+        SearchableMultiSelector,
+        UserMultiSelector,
+        avatarList,
+        BranchSelector,
+        revisionReference) {
         'use strict';
         //////////////////////////////////////////////////// Add filter to Pull Request list
         // utilities
@@ -2865,6 +2909,8 @@
                                 prCreateUtil.injectTemplateButton(template);
                             if (window.featuresData.reviewersgroup == 1)
                                 prCreateUtil.injectReviewersDropdown(jsonGroups);
+
+                            prCreateUtil.injectPRChecklist(checklist);
                         });
 
                         // PR Filter

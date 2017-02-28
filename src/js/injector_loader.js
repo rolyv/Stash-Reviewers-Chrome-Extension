@@ -10,6 +10,7 @@ function injectEngine(){
 	var notifTypeDef = $.Deferred();
 	var repomapDef = $.Deferred();
 	var featuresDef = $.Deferred();
+	var checklistDef = $.Deferred();
 
 	var manifest = chrome.runtime.getManifest();
 	createInlineScript("var stashRGEVersion = '" + manifest.version + "'; var chromeExtId='" + extensionId + "'; stashIcon='"+chrome.extension.getURL('img/stash128.png')+"';");
@@ -41,6 +42,11 @@ function injectEngine(){
 		createInlineScript('var template = "' + response.join(',') + '";');
 	});
 
+	extensionStorage.loadPRChecklist(function(response) {
+		checklistDef.resolve();
+		createInlineScript('var checklist = ' + (response || '') + ';');
+	})
+
 	extensionStorage.loadNotificationState(function(response) {
 		notifStateDef.resolve();
 		var val = (!response || response.toString() === extensionStorage.notificationStates.enable.toString()) ? 1 : 0; // notificationStates.enable by default
@@ -65,7 +71,7 @@ function injectEngine(){
 		createInlineScript('var featuresData = ' + JSON.stringify(val) + ';');
 	});
 
-	$.when(groupDef, hipchatDef, templateDef, notifStateDef, notifTypeDef, repomapDef, featuresDef).then(function(){
+	$.when(groupDef, hipchatDef, templateDef, checklistDef, notifStateDef, notifTypeDef, repomapDef, featuresDef).then(function(){
 		// UI injector
 		injectScriptFile('js/stash_page.js');
 

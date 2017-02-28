@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 	function bindSaveClick() {
 		$('#bt_save').click(function() {
-			$.when(saveGroups(), saveHipChat(), saveTemplate(), saveNotification(), saveRepoMapping(), saveFeatures())
+			$.when(saveGroups(), saveHipChat(), saveTemplate(), saveNotification(), saveRepoMapping(), saveChecklist(), saveFeatures())
 			.done(displaySavedLabel)
 			.fail(displayErrorLabel);
 		});
@@ -41,6 +41,10 @@ $(document).ready(function() {
 
 		extensionStorage.loadTemplate(function(template){
 			$('#template_text').val(template.join('\n'));
+		});
+
+		extensionStorage.loadPRChecklist(function(checklist) {
+			$('#text_checklist').val(checklist.join('\n'));
 		});
 
 		extensionStorage.loadRepoMap(function(repoMap){
@@ -238,6 +242,16 @@ $(document).ready(function() {
 		}
 
 		extensionStorage.saveRepoMap(data, function() {
+			def.resolve();
+		});
+
+		return def.promise();
+	}
+
+	function saveChecklist() {
+		var def = $.Deferred();
+		var checklist = $('#text_checklist').val();
+		extensionStorage.savePRChecklist(checklist, function() {
 			def.resolve();
 		});
 

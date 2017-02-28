@@ -10,6 +10,7 @@ var extensionStorage = (function() {
 	const NOTIFSTATE_KEY = 'stashplugin.notifstate';
 	const NOTIFTYPE_KEY = 'stashplugin.notiftype';
 	const REPOMAP_KEY = 'stashplugin.repomap';
+	const PRCHECKLIST_KEY = 'stashplugin.prchecklist';
 	const FEATURES_KEY = 'stashplugin.features';
 
 	var defaultFeatures = {
@@ -23,6 +24,7 @@ var extensionStorage = (function() {
 		pa: true,
 		forkorigin: true,
 		prtemplate: true,
+		prchecklist: true,
 		prconflicts: true,
 		checkversion: true
 	};
@@ -85,6 +87,7 @@ var extensionStorage = (function() {
 		data[REVIEWERS_URL_KEY] = JSON.stringify(array);
 		cloudStorage.set(data, callback);
 	}
+
 	function loadUrl(callback) {
 		cloudStorage.get(null, function(items) {
 			if (callback) {
@@ -114,6 +117,22 @@ var extensionStorage = (function() {
 	function saveTemplate(string, callback) {
 		var data = {};
 		data[TEMPLATE_KEY] = string.split('\n');
+		cloudStorage.set(data, callback);
+	}
+
+	function loadPRChecklist(callback) {
+		cloudStorage.get(null, function(items) {
+			if (callback) {
+				callback(items[PRCHECKLIST_KEY] || "");
+			}
+		});
+	}
+
+	function savePRChecklist(string, callback) {
+		var data = {};
+		debugger;
+		console.log(string);
+		data[PRCHECKLIST_KEY] = JSON.stringify(string.split('\n'));
 		cloudStorage.set(data, callback);
 	}
 
@@ -205,6 +224,8 @@ var extensionStorage = (function() {
 		loadUrl: loadUrl,
 		loadTemplate: loadTemplate,
 		saveTemplate: saveTemplate,
+		loadPRChecklist: loadPRChecklist,
+		savePRChecklist: savePRChecklist,
 		loadHipChatUsername: loadHipChatUsername,
 		saveHipChatUsername: saveHipChatUsername,
 		loadBackgroundState: loadBackgroundState,
